@@ -29,4 +29,22 @@ class NeoController
 
         return new JsonResponse($hazardous);
     }
+
+    /**
+     * @Route("/neo/fastest/{hazardous}", name="neo_fastest")
+     */
+    public function getFastest($hazardous = false): JsonResponse
+    {
+        $neo = $this->neoRepository->findFastest($hazardous);
+
+        return new JsonResponse(
+            [
+                'id' => $neo->getId(),
+                'date' => $neo->getDate()->format('y-m-d'),
+                'reference' => $neo->getReference(),
+                'name' => $neo->getName(),
+                'speed' => $neo->getSpeed(),
+            ]
+        );
+    }
 }

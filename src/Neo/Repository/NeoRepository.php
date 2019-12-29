@@ -32,38 +32,23 @@ class NeoRepository extends ServiceEntityRepository
         return $qb->getQuery()->getArrayResult();
     }
 
+    public function findFastest(bool $isHazardous): Neo
+    {
+        $qb = $this->createQueryBuilder('q');
+        $qb
+            ->orderBy('q.speed', 'DESC')
+            ->setMaxResults(1);
+
+        if ($isHazardous) {
+            $qb->andWhere('q.isHazardous = 1');
+        }
+
+        return $qb->getQuery()->getSingleResult();
+    }
+
     public function save(Neo $neo): void
     {
         $this->_em->persist($neo);
         $this->_em->flush($neo);
     }
-
-    // /**
-    //  * @return Neo[] Returns an array of Neo objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('n.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Neo
-    {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -32,7 +32,7 @@ class Neo
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="float", length=255)
      */
     private $speed;
 
