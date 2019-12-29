@@ -4,7 +4,7 @@ namespace App\Neo\Repository;
 
 use App\Neo\Entity\Neo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Neo|null find($id, $lockMode = null, $lockVersion = null)
@@ -32,7 +32,7 @@ class NeoRepository extends ServiceEntityRepository
         return $qb->getQuery()->getArrayResult();
     }
 
-    public function findFastest(bool $isHazardous): Neo
+    public function findFastest(bool $isHazardous = false): Neo
     {
         $qb = $this->createQueryBuilder('q');
         $qb
@@ -45,6 +45,57 @@ class NeoRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getSingleResult();
     }
+
+    public function findBestYear(bool $isHazardous = false): array
+    {
+        $qb = $this->createQueryBuilder('q');
+
+        $qb
+            ->select('YEAR(q.date) as gYear, COUNT(q.id) as count')
+            ->groupBy('gYear')
+            ->orderBy('count', 'DESC')
+            ->setMaxResults(1);
+
+        if ($isHazardous) {
+            $qb->andWhere('q.isHazardous = 1');
+        }
+
+        return $qb->getQuery()->getScalarResult();
+    }
+
+    public function findBestMonth(bool $isHazardous = false): array
+    {
+        $qb = $this->createQueryBuilder('q');
+
+        $qb
+            ->select('YEAR(q.date) as gYear, MONTH(q.date) as gMonth, COUNT(q.id) as count')
+            ->groupBy('gYear, gMonth')
+            ->orderBy('count', 'DESC')
+            ->setMaxResults(1);
+
+        if ($isHazardous) {
+            $qb->andWhere('q.isHazardous = 1');
+        }
+
+        return $qb->getQuery()->getScalarResult();
+    }
+
+//    public function findBestMonth(bool $isHazardous = false): int
+//    {
+//        $qb = $this->createQueryBuilder('q');
+//
+//        $qb
+//            ->select('YEAR(DATE), MONTH(DATE), COUNT(*) as count')
+//            ->groupBy('YEAR(DATE), MONTH(DATE)')
+//            ->orderBy('count', 'DESC')
+//            ->setMaxResults(1);
+//
+//        if ($isHazardous) {
+//            $qb->andWhere('q.isHazardous = 1');
+//        }
+//
+//        return $qb->getQuery()->getSingleScalarResult();
+//    }
 
     public function save(Neo $neo): void
     {
