@@ -79,4 +79,19 @@ class NeoController
             ]
         );
     }
+
+    /**
+     * @Route("/neo/best-month-without-year/{hazardous}", name="neo_best_month_without_year", defaults={"hazardous"=false})
+     */
+    public function getBestMonthWithoutYear($hazardous = false): JsonResponse
+    {
+        $bestYear = $this->neoRepository->findBestMonthWithoutYear($hazardous);
+
+        return new JsonResponse(
+            [
+                'month' => $bestYear[0]['gMonth'],
+                'total' => $bestYear[0]['count'],
+            ]
+        );
+    }
 }

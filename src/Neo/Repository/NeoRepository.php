@@ -80,6 +80,23 @@ class NeoRepository extends ServiceEntityRepository
         return $qb->getQuery()->getScalarResult();
     }
 
+    public function findBestMonthWithoutYear(bool $isHazardous = false): array
+    {
+        $qb = $this->createQueryBuilder('q');
+
+        $qb
+            ->select('MONTH(q.date) as gMonth, COUNT(q.id) as count')
+            ->groupBy('gMonth')
+            ->orderBy('count', 'DESC')
+            ->setMaxResults(1);
+
+        if ($isHazardous) {
+            $qb->andWhere('q.isHazardous = 1');
+        }
+
+        return $qb->getQuery()->getScalarResult();
+    }
+
     public function save(Neo $neo): void
     {
         $this->_em->persist($neo);

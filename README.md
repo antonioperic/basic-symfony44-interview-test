@@ -106,10 +106,12 @@ On bigger projects I prefer to use YAML for better and easier organization
 ## note
 I added maker bundle and use annotation for models.
 I decoupled logic so there is service for fetching data from api,
-and service for managing and saving data to the databse. If data exist in db, it will not
+and service for managing and saving data to the database. If data exist in db, it will not
 be persisted.
 
 I complete one bonus task.
+
+Also I added `/neo/best-month-without-year/{hazardous}` because I was unsure about specification, so I added both cases with year and without year
 
 # instructions
 
