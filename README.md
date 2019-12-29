@@ -110,3 +110,13 @@ and service for managing and saving data to the databse. If data exist in db, it
 be persisted.
 
 I complete one bonus task.
+
+# instructions
+
+1. clone repository
+2. run composer install
+3. setup access to database
+4. setup access to the db and run `do:da:cr`
+4. run `do:sc:cr`
+5 run `neo:fetch`
+6. navigate throught the routes
