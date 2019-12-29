@@ -95,3 +95,10 @@ Access the project with your favourite browser. You should see similar welcome s
 # That's it!
 
 **Thank you for your participation! Good luck submitting your results!**
+
+
+# My comments
+
+## Task 3
+I used annotation for routes, since that was default configuration in project. 
+On bigger projects I prefer to use YAML for better and easier organization
