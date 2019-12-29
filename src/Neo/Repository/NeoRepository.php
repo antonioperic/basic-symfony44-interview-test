@@ -24,6 +24,14 @@ class NeoRepository extends ServiceEntityRepository
         return $this->findOneBy(['date' => $dateTime, 'reference' => $reference]);
     }
 
+    public function findAllHazardous(): array
+    {
+        $qb = $this->createQueryBuilder('q');
+        $qb->where('q.isHazardous = 1');
+
+        return $qb->getQuery()->getArrayResult();
+    }
+
     public function save(Neo $neo): void
     {
         $this->_em->persist($neo);
