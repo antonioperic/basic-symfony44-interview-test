@@ -102,3 +102,11 @@ Access the project with your favourite browser. You should see similar welcome s
 ## Task 3
 I used annotation for routes, since that was default configuration in project. 
 On bigger projects I prefer to use YAML for better and easier organization
+
+## note
+I added maker bundle and use annotation for models.
+I decoupled logic so there is service for fetching data from api,
+and service for managing and saving data to the databse. If data exist in db, it will not
+be persisted.
+
+I complete one bonus task.
